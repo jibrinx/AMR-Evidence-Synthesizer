@@ -387,7 +387,7 @@ def database(store):
                 for r in records
             ],
             hide_index=True,
-            use_container_width=True,
+            width="stretch",
         )
     left, right = st.columns(2)
     left.download_button("Download CSV", to_csv(records), "amr_estimates.csv", "text/csv")

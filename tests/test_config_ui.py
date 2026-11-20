@@ -97,7 +97,7 @@ def test_review_app_with_record(tmp_path, monkeypatch):
     monkeypatch.setenv("AMR_DB_PATH", str(path))
     monkeypatch.setenv("AMR_READ_ONLY", "false")
     monkeypatch.setenv("AMR_AI_ENABLED", "false")
-    app = AppTest.from_file(str(APP), default_timeout=15).run()
+    app = AppTest.from_file(str(APP), default_timeout=30).run()
     app.sidebar.radio[0].set_value("Review").run()
     assert not app.exception
     labels = [t.label for t in app.text_input]

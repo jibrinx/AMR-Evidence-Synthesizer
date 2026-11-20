@@ -109,23 +109,19 @@ See [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md).
 
 ## Deploy from GitHub
 
-This delivery contains source code, not a created remote repository or live site.
+The public source repository is at https://github.com/jibrinx/AMR-Evidence-Synthesizer.
 
-1. Create an empty GitHub repository.
-2. From this directory:
+1. Clone the repository or push future changes to `main`:
 
    ```bash
-   git init
-   git add .
-   git commit -m "Initial supervised AMR evidence application"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_ACCOUNT/amr-evidence-synthesizer.git
-   git push -u origin main
+   git clone https://github.com/jibrinx/AMR-Evidence-Synthesizer.git
+   cd AMR-Evidence-Synthesizer
+   git pull --ff-only
    ```
 
-3. Inspect the Actions tab. The included workflow tests Python 3.11/3.12 and separately builds/smoke-checks Docker. Those remote jobs have not run merely because the files are delivered.
-4. For a public demonstration, connect the repository to Streamlit Community Cloud, select `app.py`, and use Python 3.11 or 3.12. Keep `AMR_READ_ONLY="true"` and `AMR_AI_ENABLED="false"`. Dependencies are installed from `requirements.txt` and the pinned `requirements.lock`.
-5. For editable research work, deploy behind hosting-level access control with a durable database volume. **Do not treat Community Cloud's local filesystem as a backed-up research database.** This application has no built-in login.
+2. Inspect the Actions tab. The included workflow tests Python 3.11/3.12 and separately builds and smoke-checks Docker.
+3. For a public demonstration, connect the repository to Streamlit Community Cloud, select `app.py`, and use Python 3.11 or 3.12. Keep `AMR_READ_ONLY="true"` and `AMR_AI_ENABLED="false"`. Dependencies are installed from `requirements.txt` and the pinned `requirements.lock`.
+4. For editable research work, deploy behind hosting-level access control with a durable database volume. **Do not treat Community Cloud's local filesystem as a backed-up research database.** This application has no built-in login.
 
 Root-level Streamlit secrets can contain configuration keys such as:
 
