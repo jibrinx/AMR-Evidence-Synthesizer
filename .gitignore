@@ -1,0 +1,15 @@
+.venv/
+.env
+data/
+*.sqlite3*
+*.db
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.streamlit/secrets.toml
+coverage.xml
+.coverage

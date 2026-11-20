@@ -1,0 +1,33 @@
+name: Test application
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --extra dev
+      - run: uv run --frozen --extra dev ruff check .
+      - run: uv run --frozen --extra dev ruff format --check .
+      - run: uv run --frozen --extra dev pytest
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t amr-evidence:test .
+      - name: Check container health
+        run: |
+          docker run -d --name amr-test -p 127.0.0.1:8501:8501 amr-evidence:test
+          python -c "import urllib.request, time; exec('for i in range(30):\n try:\n  assert urllib.request.urlopen(\"http://127.0.0.1:8501/_stcore/health\", timeout=2).status == 200\n  break\n except Exception:\n  time.sleep(2)\nelse:\n raise SystemExit(\"Container did not become healthy\")')"
+      - if: always()
+        run: docker logs amr-test; docker rm -f amr-test

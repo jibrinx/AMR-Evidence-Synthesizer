@@ -1,0 +1,3 @@
+# Streamlit Community Cloud installs this from the repository root.
+-r requirements.lock
+.

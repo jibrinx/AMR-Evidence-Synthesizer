@@ -1,0 +1,14 @@
+services:
+  amr:
+    build: .
+    ports:
+      - "127.0.0.1:8501:8501"
+    env_file:
+      - .env
+    environment:
+      AMR_DB_PATH: /data/evidence.sqlite3
+    volumes:
+      - amr_data:/data
+    restart: unless-stopped
+volumes:
+  amr_data:
