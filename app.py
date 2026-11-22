@@ -65,7 +65,7 @@ def source_label(source):
 
 
 def discover(store, config):
-    st.header("Discover studies")
+    st.header("Discover studies", icon=":material/manage_search:")
     st.caption("PubMed results are screening candidates, not confirmed Nigerian AMR evidence.")
     with st.form("pubmed_search"):
         query = st.text_area("PubMed query", DEFAULT_QUERY)
@@ -103,7 +103,7 @@ def discover(store, config):
 
 
 def upload(store, config):
-    st.header("Upload a publication")
+    st.header("Upload a publication", icon=":material/upload_file:")
     st.caption("Text-based PDF or UTF-8 TXT · 20 MB · 100 PDF pages. Originals are not retained.")
     if config.read_only:
         st.info("Uploads are disabled in public read-only mode.")
@@ -135,7 +135,7 @@ def upload(store, config):
 
 
 def agent_workspace(store, config):
-    st.header("Supervised agent")
+    st.header("Supervised agent", icon=":material/smart_toy:")
     st.caption(
         "Search → inspect passages → propose pending estimates. Only a human can approve evidence."
     )
@@ -306,7 +306,7 @@ def estimate_form(store, source, existing=None):
 
 
 def review_workspace(store, config):
-    st.header("Review evidence")
+    st.header("Review evidence", icon=":material/rule:")
     sources = store.sources()
     if not sources:
         st.info("Import a PubMed abstract or upload a document first.")
@@ -344,7 +344,7 @@ def review_workspace(store, config):
 
 
 def database(store):
-    st.header("Evidence database")
+    st.header("Evidence database", icon=":material/database:")
     statuses = st.multiselect(
         "Review statuses to display/export",
         ["approved", "pending", "rejected"],
@@ -365,7 +365,13 @@ def database(store):
         and antibiotic.lower() in (r["antibiotic_raw"] or "").lower()
         and (sector == "all" or r["sector"] == sector)
     ]
-    st.metric("Matching estimates", len(records))
+    if records:
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Matching estimates", len(records), border=True)
+        m2.metric("Approved", sum(r["review_status"] == "approved" for r in records), border=True)
+        m3.metric("Pending", sum(r["review_status"] == "pending" for r in records), border=True)
+    else:
+        st.metric("Matching estimates", 0)
     if records:
         st.dataframe(
             [
@@ -390,9 +396,15 @@ def database(store):
             width="stretch",
         )
     left, right = st.columns(2)
-    left.download_button("Download CSV", to_csv(records), "amr_estimates.csv", "text/csv")
+    left.download_button(
+        "Download CSV", to_csv(records), "amr_estimates.csv", "text/csv", width="stretch"
+    )
     right.download_button(
-        "Download JSON", to_json(records), "amr_estimates.json", "application/json"
+        "Download JSON",
+        to_json(records),
+        "amr_estimates.json",
+        "application/json",
+        width="stretch",
     )
     st.caption(
         "Exports match the displayed filters. JSON retains nulls and nested assessments; CSV escapes spreadsheet formula prefixes."
@@ -400,7 +412,7 @@ def database(store):
 
 
 def guide():
-    st.header("Guide and limitations")
+    st.header("Guide and limitations", icon=":material/menu_book:")
     st.markdown("""
 1. **Discover or upload** authorized published text. Confirm citation metadata.
 2. **Agent or rules/manual** creates pending estimates. The agent may search and inspect sources,
@@ -426,15 +438,19 @@ Nigerian evidence corpus is included. See README and docs for installation, priv
 
 def main():
     config = settings()
-    st.title("AMR Evidence Synthesizer")
+    st.title("AMR Evidence Synthesizer", icon=":material/biotech:")
     st.caption(
         "NIGERIA · Published evidence · Source-grounded extraction · Human-reviewed decisions"
     )
+    if config.read_only:
+        st.badge("Public read-only", icon=":material/lock:", color="gray")
+    else:
+        st.badge("Private review workspace", icon=":material/verified_user:", color="green")
     st.sidebar.title("Research workspace")
     if config.read_only:
-        st.sidebar.info("Public read-only mode")
+        st.sidebar.caption("Public read-only mode")
     else:
-        st.sidebar.warning("Private review mode · host access control required")
+        st.sidebar.caption("Private review mode · host access control required")
     area = st.sidebar.radio(
         "Navigate", ["Discover", "Upload", "Agent", "Review", "Database", "Guide"]
     )

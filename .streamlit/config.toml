@@ -1,10 +1,56 @@
 [theme]
 base = "light"
-primaryColor = "#0279EE"
-backgroundColor = "#FAF9F3"
-secondaryBackgroundColor = "#ECE9E2"
-textColor = "#000000"
-font = "sans serif"
+primaryColor = "#0B6E69"
+backgroundColor = "#F7F9F8"
+secondaryBackgroundColor = "#EDF3F1"
+textColor = "#17332F"
+borderColor = "#CAD9D5"
+linkColor = "#075C58"
+baseRadius = "0.65rem"
+buttonRadius = "0.65rem"
+showWidgetBorder = true
+showSidebarBorder = true
+paddingTop = "1.25rem"
+
+[theme.sidebar]
+backgroundColor = "#123B36"
+secondaryBackgroundColor = "#1A4A44"
+textColor = "#F4FAF8"
+borderColor = "#2B5A54"
+primaryColor = "#7FD1C7"
+linkColor = "#A9E3DB"
+
+[theme.light]
+primaryColor = "#0B6E69"
+backgroundColor = "#F7F9F8"
+secondaryBackgroundColor = "#EDF3F1"
+textColor = "#17332F"
+borderColor = "#CAD9D5"
+linkColor = "#075C58"
+
+[theme.dark]
+primaryColor = "#7FD1C7"
+backgroundColor = "#102320"
+secondaryBackgroundColor = "#18312D"
+textColor = "#EFF8F6"
+borderColor = "#35554F"
+linkColor = "#A9E3DB"
+
+[theme.light.sidebar]
+backgroundColor = "#123B36"
+secondaryBackgroundColor = "#1A4A44"
+textColor = "#F4FAF8"
+borderColor = "#2B5A54"
+primaryColor = "#7FD1C7"
+linkColor = "#A9E3DB"
+
+[theme.dark.sidebar]
+backgroundColor = "#091916"
+secondaryBackgroundColor = "#102A25"
+textColor = "#F4FAF8"
+borderColor = "#294A44"
+primaryColor = "#7FD1C7"
+linkColor = "#A9E3DB"
 
 [server]
 maxUploadSize = 20
